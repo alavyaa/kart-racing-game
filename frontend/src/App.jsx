@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
+import './styles/App.css';
 import Lobby from './components/Lobby';
 import Game from './components/Game';
 
