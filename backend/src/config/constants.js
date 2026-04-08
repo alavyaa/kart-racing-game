@@ -1,0 +1,66 @@
+export const GAME_CONSTANTS = {
+  // Physics
+  MAX_SPEED: 0.5,
+  ACCELERATION: 0.02,
+  FRICTION: 0.95,
+  DRIFT_FACTOR: 1.3,
+  ROTATION_SPEED: 0.1,
+  
+  // Game
+  TICK_RATE: 60, // Updates per second
+  GAME_WIDTH: 1200,
+  GAME_HEIGHT: 800,
+  
+  // Player
+  PLAYER_SIZE: 20,
+  SPAWN_POINTS: [
+    { x: 100, y: 400 },
+    { x: 150, y: 400 },
+    { x: 100, y: 450 },
+    { x: 150, y: 450 },
+  ],
+  
+  // Network
+  INTERPOLATION_FACTOR: 0.1,
+  MAX_PLAYERS_PER_ROOM: 8,
+  
+  // Collision
+  COLLISION_DAMPING: 0.7,
+};
+
+export const COLORS = {
+  RED: '#FF6B6B',
+  BLUE: '#4ECDC4',
+  GREEN: '#95E1D3',
+  YELLOW: '#FFE66D',
+  PURPLE: '#C7CEEA',
+  PINK: '#FF9ECD',
+  ORANGE: '#FFA07A',
+  CYAN: '#87CEEB',
+};
+
+export const PLAYER_COLORS = [
+  COLORS.RED,
+  COLORS.BLUE,
+  COLORS.GREEN,
+  COLORS.YELLOW,
+  COLORS.PURPLE,
+  COLORS.PINK,
+  COLORS.ORANGE,
+  COLORS.CYAN,
+];
+
+export const MESSAGE_TYPES = {
+  // Room
+  ROOM_CREATE: 'ROOM_CREATE',
+  ROOM_JOIN: 'ROOM_JOIN',
+  ROOM_LEAVE: 'ROOM_LEAVE',
+  ROOM_LIST: 'ROOM_LIST',
+  ROOM_PLAYERS_UPDATE: 'ROOM_PLAYERS_UPDATE',
+  
+  // Game
+  GAME_START: 'GAME_START',
+  GAME_STOP: 'GAME_STOP',
+  PLAYER_UPDATE: 'PLAYER_UPDATE',
+  GAME_STATE: 'GAME_STATE',
+};

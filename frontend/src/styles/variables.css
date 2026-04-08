@@ -1,0 +1,17 @@
+:root {
+  --primary-color: #4ecdc4;
+  --primary-dark: #16213e;
+  --secondary-color: #ff6b6b;
+  --background: #1a1a2e;
+  --surface: #16213e;
+  --border: #0f3460;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --success: #95e1d3;
+  --danger: #ff6b6b;
+  --warning: #ffe66d;
+
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --transition: all 0.3s ease;
+}

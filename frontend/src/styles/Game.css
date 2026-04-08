@@ -1,0 +1,244 @@
+@import './variables.css';
+
+.game-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background: var(--background);
+  position: relative;
+}
+
+.game-canvas {
+  flex: 1;
+  display: block;
+  background: #0a0e27;
+  cursor: none;
+}
+
+.game-ui {
+  width: 300px;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.game-header {
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.game-info h2 {
+  color: var(--primary-color);
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.game-info p {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.game-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.control-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: bold;
+  transition: var(--transition);
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.control-button.start {
+  background: var(--success);
+  color: var(--background);
+}
+
+.control-button.start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(149, 225, 211, 0.4);
+}
+
+.control-button.stop {
+  background: var(--danger);
+  color: white;
+}
+
+.control-button.stop:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 107, 107, 0.4);
+}
+
+.control-button.quit {
+  background: transparent;
+  border: 2px solid var(--danger);
+  color: var(--danger);
+}
+
+.control-button.quit:hover {
+  background: rgba(255, 107, 107, 0.1);
+}
+
+.game-sidebar {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.sidebar-section {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-section:last-child {
+  border-bottom: none;
+}
+
+.sidebar-section h3 {
+  color: var(--primary-color);
+  font-size: 14px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.player-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.player-stat {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border);
+  transition: var(--transition);
+}
+
+.player-stat.current {
+  border-color: var(--primary-color);
+  background: rgba(78, 205, 196, 0.1);
+}
+
+.player-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.player-name {
+  color: var(--text-primary);
+  font-size: 13px;
+  flex: 1;
+}
+
+.current-badge {
+  color: var(--primary-color);
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.controls-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.controls-info p {
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin: 0;
+}
+
+.controls-info strong {
+  color: var(--primary-color);
+}
+
+.status-running {
+  color: var(--success);
+  font-weight: bold;
+}
+
+.status-waiting {
+  color: var(--warning);
+  font-weight: bold;
+}
+
+.game-error {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: white;
+}
+
+.game-error h2 {
+  color: var(--danger);
+  margin-bottom: 20px;
+}
+
+.game-error p {
+  margin-bottom: 20px;
+  max-width: 400px;
+  text-align: center;
+}
+
+.game-error button {
+  padding: 12px 30px;
+  background: var(--primary-color);
+  color: var(--background);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: bold;
+  transition: var(--transition);
+}
+
+.game-error button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(78, 205, 196, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .game-ui {
+    width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-container {
+    flex-direction: column;
+  }
+
+  .game-ui {
+    width: 100%;
+    max-height: 30vh;
+    border-left: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .game-sidebar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+}
