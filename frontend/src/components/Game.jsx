@@ -1,8 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import {
   onRoomUpdated,
   onGameStarted,
   onGameStopped,
+  onGameStateUpdate,
+  offRoomUpdated,
+  offGameStarted,
+  offGameStopped,
+  offGameStateUpdate,
   leaveRoom,
 } from '../services/socketService';
 import { useGame } from '../hooks/useGame';
@@ -15,6 +20,21 @@ export default function Game({ roomCode, username, initialRoomData, onQuit }) {
   const [gameRunning, setGameRunning] = useState(false);
   const [error, setError] = useState(null);
   const [isHost, setIsHost] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  // Validate initial room data before attempting to use it
+  useEffect(() => {
+    if (!initialRoomData || !initialRoomData.players || initialRoomData.players.length === 0) {
+      setError('Invalid room data: no players found');
+      return;
+    }
+    setIsInitialized(true);
+  }, [initialRoomData]);
+
+  const playerId = useMemo(
+    () => (isInitialized ? initialRoomData?.players?.[0]?.id ?? null : null),
+    [isInitialized, initialRoomData]
+  );
 
   const {
     isRunning: engineRunning,
@@ -23,38 +43,50 @@ export default function Game({ roomCode, username, initialRoomData, onQuit }) {
     updateGameState,
     startGame,
     stopGame,
-  } = useGame(canvasRef, initialRoomData.players[0].id, roomCode);
+  } = useGame(canvasRef, playerId, roomCode);
 
   // Check if current player is host
   useEffect(() => {
-    if (roomData) {
-      setIsHost(roomData.hostId === initialRoomData.players[0].id);
+    if (roomData && playerId) {
+      setIsHost(roomData.hostId === playerId);
     }
-  }, [roomData, initialRoomData]);
+  }, [roomData, playerId]);
 
   // Setup socket listeners
   useEffect(() => {
+    if (!isInitialized) return;
+
     const handleRoomUpdate = (updatedRoom) => {
       setRoomData(updatedRoom);
     };
 
-    const handleGameStarted = (data) => {
+    const handleGameStarted = () => {
       setGameRunning(true);
-      initializeGame(roomData);
+      if (roomData) {
+        initializeGame(roomData);
+      }
     };
 
     const handleGameStopped = () => {
       setGameRunning(false);
     };
 
+    const handleGameState = (gameState) => {
+      updateGameState(gameState);
+    };
+
     onRoomUpdated(handleRoomUpdate);
     onGameStarted(handleGameStarted);
     onGameStopped(handleGameStopped);
+    onGameStateUpdate(handleGameState);
 
     return () => {
-      // Cleanup listeners
+      offRoomUpdated(handleRoomUpdate);
+      offGameStarted(handleGameStarted);
+      offGameStopped(handleGameStopped);
+      offGameStateUpdate(handleGameState);
     };
-  }, [roomData, initializeGame]);
+  }, [isInitialized, roomData, initializeGame, updateGameState]);
 
   const handleQuit = async () => {
     try {
@@ -65,24 +97,21 @@ export default function Game({ roomCode, username, initialRoomData, onQuit }) {
     }
   };
 
-  const handleGameState = (gameState) => {
-    updateGameState(gameState);
-  };
-
-  useEffect(() => {
-    const { onGameStateUpdate } = require('../services/socketService');
-    const listener = onGameStateUpdate(handleGameState);
-    return () => {
-      // Cleanup
-    };
-  }, []);
-
   if (error || engineError) {
     return (
       <div className="game-error">
         <h2>Error</h2>
         <p>{error || engineError}</p>
         <button onClick={handleQuit}>Back to Lobby</button>
+      </div>
+    );
+  }
+
+  if (!isInitialized) {
+    return (
+      <div className="game-loading">
+        <h2>Loading Game...</h2>
+        <p>Please wait while we initialize the game.</p>
       </div>
     );
   }

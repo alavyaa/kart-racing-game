@@ -159,6 +159,14 @@ export const offRoomUpdated = (callback) => {
   getSocket().off('room:updated', callback);
 };
 
+export const offGameStarted = (callback) => {
+  getSocket().off('game:started', callback);
+};
+
+export const offGameStopped = (callback) => {
+  getSocket().off('game:stopped', callback);
+};
+
 export const offGameStateUpdate = (callback) => {
   getSocket().off('game:stateUpdate', callback);
 };
