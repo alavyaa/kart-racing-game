@@ -127,6 +127,7 @@ export class Room {
       players,
       gameState: this.gameState,
       playerCount: this.players.size,
+      players: Array.from(this.players.values()), // 🔥 IMPORTANT
       maxPlayers: GAME_CONSTANTS.MAX_PLAYERS_PER_ROOM,
       createdAt: this.createdAt,
       startedAt: this.startedAt,
