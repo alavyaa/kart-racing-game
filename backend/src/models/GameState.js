@@ -5,32 +5,20 @@ export class GameState {
   constructor() {
     this.rooms = new Map();
   }
-}
 
-createRoom(code, hostId, hostUsername) {
-  if (this.rooms.has(code)) {
-    return {
-      success: false,
-      error: 'Room already exists',
-    };
-  }
-
-  const room = new Room(code, hostId, hostUsername);
-
-  // 🔥 add host as player
-  room.addPlayer(hostId, hostUsername);
-
-  this.rooms.set(code, room);
-
-  logger.info(`Room created: ${code} by ${hostUsername}`);
-
-  return {
-    success: true,
-    room: room.getState(),
-  };
-}
+  createRoom(code, hostId, hostUsername) {
+    if (this.rooms.has(code)) {
+      return {
+        success: false,
+        error: 'Room already exists',
+      };
+    }
 
     const room = new Room(code, hostId, hostUsername);
+
+    // ✅ Add host as player (MAIN FIX)
+    room.addPlayer(hostId, hostUsername);
+
     this.rooms.set(code, room);
 
     logger.info(`Room created: ${code} by ${hostUsername}`);
@@ -51,6 +39,7 @@ createRoom(code, hostId, hostUsername) {
     }
 
     const result = room.addPlayer(playerId, username);
+
     if (result.success) {
       return {
         success: true,
