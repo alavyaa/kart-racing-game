@@ -6,13 +6,28 @@ export class GameState {
     this.rooms = new Map();
   }
 
-  createRoom(code, hostId, hostUsername) {
-    if (this.rooms.has(code)) {
-      return {
-        success: false,
-        error: 'Room already exists',
-      };
-    }
+ createRoom(code, hostId, hostUsername) {
+  if (this.rooms.has(code)) {
+    return {
+      success: false,
+      error: 'Room already exists',
+    };
+  }
+
+  const room = new Room(code, hostId, hostUsername);
+
+  // 🔥 ADD THIS LINE (MOST IMPORTANT FIX)
+  room.addPlayer(hostId, hostUsername);
+
+  this.rooms.set(code, room);
+
+  logger.info(`Room created: ${code} by ${hostUsername}`);
+
+  return {
+    success: true,
+    room: room.getState(),
+  };
+}
 
     const room = new Room(code, hostId, hostUsername);
     this.rooms.set(code, room);
