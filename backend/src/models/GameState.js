@@ -5,6 +5,7 @@ export class GameState {
   constructor() {
     this.rooms = new Map();
   }
+}
 
 createRoom(code, hostId, hostUsername) {
   if (this.rooms.has(code)) {
