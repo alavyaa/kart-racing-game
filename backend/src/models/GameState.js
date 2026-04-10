@@ -6,7 +6,7 @@ export class GameState {
     this.rooms = new Map();
   }
 
- createRoom(code, hostId, hostUsername) {
+createRoom(code, hostId, hostUsername) {
   if (this.rooms.has(code)) {
     return {
       success: false,
@@ -16,7 +16,7 @@ export class GameState {
 
   const room = new Room(code, hostId, hostUsername);
 
-  // 🔥 ADD THIS LINE (MOST IMPORTANT FIX)
+  // 🔥 add host as player
   room.addPlayer(hostId, hostUsername);
 
   this.rooms.set(code, room);
