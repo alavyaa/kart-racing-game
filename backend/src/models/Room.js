@@ -15,20 +15,32 @@ export class Room {
     this.colorIndex = 0;
   }
 
-  addPlayer(playerId, username) {
-    if (this.players.size >= GAME_CONSTANTS.MAX_PLAYERS_PER_ROOM) {
-      return {
-        success: false,
-        error: 'Room is full',
-      };
-    }
+ addPlayer(playerId, username) {
+  if (this.players.size >= GAME_CONSTANTS.MAX_PLAYERS_PER_ROOM) {
+    return {
+      success: false,
+      error: 'Room is full',
+    };
+  }
 
-    if (this.players.has(playerId)) {
-      return {
-        success: false,
-        error: 'Player already in room',
-      };
-    }
+  if (this.players.has(playerId)) {
+    return {
+      success: false,
+      error: 'Player already in room',
+    };
+  }
+
+  // 🔥 THIS IS THE MOST IMPORTANT PART (YOU ARE MISSING THIS)
+  this.players.set(playerId, {
+    id: playerId,
+    username,
+    ready: false,
+  });
+
+  return {
+    success: true,
+  };
+}
 
     const spawnPoint =
       GAME_CONSTANTS.SPAWN_POINTS[this.players.size % GAME_CONSTANTS.SPAWN_POINTS.length];
